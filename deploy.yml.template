@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: za-igranje
+spec:
+  type: NodePort
+#  type: LoadBalancer
+  selector:
+    app: za-igranje
+  ports:
+    - protocol: TCP
+      port: 4000
+
+---
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: za-igranje
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: za-igranje-pod
+      labels:
+        app: za-igranje
+    spec:
+      containers:
+      - name: za-igranje
+        image: ${REPO}:${TAG}
+        ports:
+        - containerPort: 4000
+        livenessProbe:
+          httpGet:
+            path: /health_check/ping
+            port: 4000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+      ${IMAGE_PULL_SECRETS}
