@@ -20,6 +20,7 @@ defmodule ZaIgranje.Polish.Stack do
   def do_get_operand(val, state) when is_number(val), do: {val, state}
   def do_get_operand(val, state), do: process(val, state)
 
-  def compute(_op, val1, val2), do: val1 + val2
+  def compute("+", val1, val2), do: val1 + val2
+  def compute("-", val1, val2), do: val1 - val2
 
 end

@@ -39,6 +39,7 @@ defmodule ZaIgranje.Mixfile do
       {:httpoison, "~> 0.11"},
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
       {:mix_test_watch, "~> 0.3", only: :dev, runtime: false},
+      {:wormhole, "~> 2.2"},
     ]
   end
 end
