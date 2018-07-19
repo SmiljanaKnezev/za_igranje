@@ -6,12 +6,9 @@ defmodule ZaIgranje.Polish.Stack do
   end
 
   def process(op, state)  do
-    state     |> IO.inspect(label: "WWWWWW")
 
     {val1, state} = get_operand(state)
-    |> IO.inspect(label: "QQQQQQQ")
     {val2, state} = get_operand(state)
-    |> IO.inspect(label: "val2")
     {compute(op, val1, val2), state}
   end
 

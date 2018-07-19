@@ -10,18 +10,8 @@ defmodule ZaIgranje.Polish do
   def init(_), do: {:ok, []}
 
   def handle_call({:push, value}, _from, state) do
-    state = [value | state]
+    state = [convert(value) | state]
     {:reply, state, state}
-  end
-
- #ulazni podaci treba da se proveraju ovde (tu pozivati convert funkcije)
-
-  defp convert(op) when op in ["+", "-"], do: op
-
-  defp convert(string) do
-    pera
-    |> Integer.parse()
-    |> elem(0)
   end
 
   # def handle_call(:add, _from, state) when length(state) >  1 do
@@ -40,6 +30,17 @@ defmodule ZaIgranje.Polish do
   def handle_call(:compute , _from, state)  do
     raise "Less than two elements on stack : #{inspect state}"
   end
+
+  #pomocne funkcije
+  defp convert(op) when op in ["+", "-"], do: op
+
+  defp convert(value) do
+    case value |> Integer.parse() do
+      {int, _} -> int
+      _ -> raise "Excepting +, - or integers. '#{inspect value}' not supported"
+    end
+  end
+
 
   def push(value) do
     GenServer.call(ServerZaIgranje, {:push, value} )
