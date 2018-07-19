@@ -2,7 +2,6 @@ defmodule ZaIgranje.Polish do
 
   use GenServer
   alias ZaIgranje.Polish.Stack
-  require String
 
   def start_link(_) do
     {:ok, _} = GenServer.start_link(__MODULE__, :ok, name: ServerZaIgranje)
@@ -11,7 +10,6 @@ defmodule ZaIgranje.Polish do
   def init(_), do: {:ok, []}
 
   def handle_call({:push, value}, _from, state) do
-    value |> IO.inspect(label: "ZZZZZZZZZZZZZZZz")
     state = [convert(value) | state]
     {:reply, state, state}
   end
@@ -37,7 +35,7 @@ defmodule ZaIgranje.Polish do
   defp convert(op) when op in ["+", "-"], do: op
 
   defp convert(value) do
-    case value |> IO.inspect(label: "WWWWWWWWWWWWWWWW") |> Integer.parse() do
+    case value |> Integer.parse() do
       {int, _} -> int
       _ -> raise "Excepting +, - or integers. '#{inspect value}' not supported"
     end
