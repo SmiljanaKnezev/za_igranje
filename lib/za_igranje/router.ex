@@ -16,12 +16,13 @@ defmodule ZaIgranje.Router do
   end
 
   get "/za-igranje/push/:pera" do
-    rezultat = pera
-     |> convert()
-     |> ZaIgranje.Polish.push()
+     {code, response} =
+        Wormhole.capture(fn -> ZaIgranje.Polish.push(pera) end)
+        |> response_handler()
+
     conn
     |> put_resp_header("Content-Type", "text/plain")
-    |> send_resp(200, "Stack: #{inspect(rezultat)}")
+    |> send_resp(code, "Stack: #{inspect (response)}")
   end
 
 
