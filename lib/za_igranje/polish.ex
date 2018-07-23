@@ -28,7 +28,7 @@ defmodule ZaIgranje.Polish do
   end
 
   def handle_call(:compute , _from, state)  do
-    raise "Less than two elements on stack : #{inspect state}"
+    raise "Less than three elements on stack : #{inspect state}"
   end
 
   #pomocne funkcije
